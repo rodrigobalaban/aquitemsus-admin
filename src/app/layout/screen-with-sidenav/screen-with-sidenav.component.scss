@@ -1,0 +1,19 @@
+.mat-drawer-container {
+  height: 100%;
+
+  .mat-sidenav {
+    padding-left: 1em;
+    border: none;
+
+    #logo {
+      width: 125px;
+      padding: 2em 0 2em 1em;
+    }
+
+    ::ng-deep {
+      .mat-list-base .mat-list-item .mat-list-item-content {
+        padding-right: 2em !important;
+      }
+    }
+  }
+}
