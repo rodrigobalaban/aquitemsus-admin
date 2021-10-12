@@ -1,0 +1,11 @@
+#toolbar {
+    display: flex;
+    justify-content: space-between;
+
+    .welcome-user {
+        .name, 
+        .message {
+            margin: 0;
+        }
+    }
+}

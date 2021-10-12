@@ -9,10 +9,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
-import { ScreenWithSidenavComponent } from './layout';
+import { ScreenWithSidenavComponent, ToolbarComponent } from './layout';
 
 @NgModule({
-  declarations: [AppComponent, ScreenWithSidenavComponent],
+  declarations: [AppComponent, ScreenWithSidenavComponent, ToolbarComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
