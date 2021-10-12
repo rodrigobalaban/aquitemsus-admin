@@ -1,5 +1,7 @@
 .mat-drawer-container {
   height: 100%;
+  background-color: rgba($color: #ebeff5, $alpha: 0.5);
+  color: #363b56;
 
   .mat-sidenav {
     padding-left: 1em;
@@ -11,8 +13,12 @@
     }
 
     ::ng-deep {
-      .mat-list-base .mat-list-item .mat-list-item-content {
-        padding-right: 2em !important;
+      .mat-list-base .mat-list-item {
+        border-radius: 10px 0 0 10px;
+
+        .mat-list-item-content {
+          padding-right: 2em !important;
+        }
       }
     }
   }
