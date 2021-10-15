@@ -1,1 +1,25 @@
-<p>login works!</p>
+<main id="login">
+    <div class="container">
+        <img width="200" class="logo" src="assets/img/logo-white.svg">
+        <div class="login-box white-card">
+            <h1>Olá,</h1>
+            <p>para acessar o sistema,<br />faça o seu login.</p>
+            <mat-form-field appearance="standard">
+                <mat-label>E-mail</mat-label>
+                <input type="email" class="input" matInput placeholder="E-mail">
+                <mat-icon fontSet="material-icons-outlined" matPrefix>email</mat-icon>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+                <mat-label>Senha</mat-label>
+                <input type="password" class="input" matInput placeholder="Senha">
+                <mat-icon fontSet="material-icons-outlined" matPrefix>lock</mat-icon>
+            </mat-form-field>
+            <div class="button">
+                <button mat-flat-button color="primary" class="button-primary" [routerLink]="['/']">Login</button>                
+            </div>
+            <div class="button">
+                <button mat-button>Esqueci minha senha</button>                
+            </div>
+        </div>
+    </div>
+</main>
