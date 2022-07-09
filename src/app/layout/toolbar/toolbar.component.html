@@ -4,6 +4,11 @@
         <p class="message">Bem-vindo(a) novamente!</p>
     </div>
     <div class="avatar-user">
-        <img width="60" src="assets/img/user.svg">
+        <button type="button" class="icon-button" [matMenuTriggerFor]="userMenu">
+            <img width="60" src="assets/img/user.svg">
+        </button>
+        <mat-menu #userMenu="matMenu" xPosition="before">
+            <button mat-menu-item (click)="logout()">Logout</button>
+        </mat-menu>
     </div>
 </div>
