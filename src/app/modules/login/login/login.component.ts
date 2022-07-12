@@ -11,6 +11,7 @@ import { AuthService, MessageService } from '../../../shared/services';
 })
 export class LoginComponent {
   form: FormGroup;
+  displayPasswordRecovery = false;
 
   constructor(
     private _authService: AuthService,
@@ -39,5 +40,9 @@ export class LoginComponent {
       () => this._router.navigate(['/']),
       () => this._messageService.show('E-mail e/ou senha inválidos. Verifique!')
     );
+  }
+
+  toggleRecoverPassword(): void {
+    this.displayPasswordRecovery = !this.displayPasswordRecovery;
   }
 }
