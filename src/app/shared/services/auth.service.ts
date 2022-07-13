@@ -16,6 +16,11 @@ export class AuthService {
     return this.tokenIsValid();
   }
 
+  get token(): string {
+    const userSession = this.getUserAuthSession();
+    return 'Bearer ' + userSession?.token;
+  }
+
   authenticate(userCredential: UserAuth) {
     return this.http
       .post<UserCredential>(`${environment.apiUrl}/auth`, userCredential)
@@ -23,28 +28,25 @@ export class AuthService {
       .toPromise();
   }
 
-  logout(): void {
-    localStorage.clear();
-  }
-
   private saveUserAuthSession(userCredential: UserCredential): void {
     localStorage.setItem(this.sessionStorage, JSON.stringify(userCredential));
   }
 
   private tokenIsValid(): boolean {
-    const tokenExpiration = new Date(this.getUserAuthSession()?.expirationTime);
+    const userSession = this.getUserAuthSession();
+    const tokenExpiration = new Date(userSession?.expirationTime);
     const now = new Date();
 
-    if (tokenExpiration > now) {
-      return true;
-    }
-
-    return false;
+    return tokenExpiration > now;
   }
 
   private getUserAuthSession(): UserCredential {
     return JSON.parse(
       localStorage.getItem(this.sessionStorage)!
     ) as UserCredential;
+  }
+
+  logout(): void {
+    localStorage.clear();
   }
 }

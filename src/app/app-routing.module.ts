@@ -14,6 +14,10 @@ const routes: Routes = [
         loadChildren: () =>
           import('./modules/import-data').then((m) => m.ImportDataModule),
       },
+      {
+        path: 'usuarios',
+        loadChildren: () => import('./modules/user').then((m) => m.UserModule),
+      },
     ],
   },
   {
