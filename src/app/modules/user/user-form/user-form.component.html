@@ -1,1 +1,48 @@
-<p>user-form works!</p>
+<div class="page-header">
+    <h2 class="title">
+        <ng-container *ngIf="newUser else editTitle">Novo</ng-container> Usuário
+        <ng-template #editTitle>Editar</ng-template>
+    </h2>
+    <div class="line">
+        <mat-divider></mat-divider>
+    </div>
+</div>
+
+<main class="form-page">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <h3 class="section-title">Dados do Usuário</h3>
+        <div class="white-card column">
+            <mat-form-field appearance="standard">
+                <mat-label>Nome</mat-label>
+                <input type="text" matInput placeholder="Nome" formControlName="name">
+                <mat-icon fontSet="material-icons-outlined" matPrefix>person</mat-icon>
+                <mat-error *ngIf="form.get('name')?.invalid">
+                    Informe um nome.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+                <mat-label>E-mail</mat-label>
+                <input type="email" class="input" matInput placeholder="E-mail" formControlName="email">
+                <mat-icon fontSet="material-icons-outlined" matPrefix>email</mat-icon>
+                <mat-error *ngIf="form.get('email')?.invalid">
+                    Informe um e-mail válido.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+                <mat-label>Senha</mat-label>
+                <input type="password" class="input" matInput placeholder="Senha" formControlName="password">
+                <mat-icon fontSet="material-icons-outlined" matPrefix>lock</mat-icon>
+                <mat-error *ngIf="form.get('password')?.invalid">
+                    Informe uma senha.
+                </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-buttons">
+            <button type="submit" mat-flat-button color="primary" class="button-primary">
+                <ng-container *ngIf="newUser else editButton">Cadastrar</ng-container>
+                <ng-template #editButton>Atualizar</ng-template>
+            </button>
+            <button mat-button class="cancel-button" (click)="returnToList()">Cancelar</button>
+        </div>
+    </form>
+</main>
