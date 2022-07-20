@@ -42,7 +42,7 @@
                 <ng-container *ngIf="newUser else editButton">Cadastrar</ng-container>
                 <ng-template #editButton>Atualizar</ng-template>
             </button>
-            <button mat-button class="cancel-button" (click)="returnToList()">Cancelar</button>
+            <button type="button" mat-button class="cancel-button" (click)="returnToList()">Cancelar</button>
         </div>
     </form>
 </main>
