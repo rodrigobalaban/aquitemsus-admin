@@ -1,15 +1,33 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { PageList } from '../models/interfaces';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BaseService<T> {
-  pageSize = 10;
   moduleUrl = '';
 
   constructor(protected http: HttpClient) {}
+
+  async getAll(
+    search: string,
+    page: number,
+    pageSize: number
+  ): Promise<PageList<T>> {
+    var response = await this.http
+      .get<T[]>(
+        `${environment.apiUrl}/${this.moduleUrl}?search=${search}&page=${page}&pagesize=${pageSize}`,
+        { observe: 'response' }
+      )
+      .toPromise();
+
+    return {
+      totalItems: +response.headers.get('X-Total-Count')!,
+      items: response.body!,
+    };
+  }
 
   getById(id: number): Promise<T> {
     return this.http

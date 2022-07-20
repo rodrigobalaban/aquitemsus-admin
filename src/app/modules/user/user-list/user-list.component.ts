@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { PageEvent } from '@angular/material/paginator';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { BaseListComponent } from 'src/app/shared/base/base-list/base-list.component';
 import { User } from 'src/app/shared/models';
 import { UserService } from 'src/app/shared/services';
 
@@ -9,48 +9,10 @@ import { UserService } from 'src/app/shared/services';
   templateUrl: './user-list.component.html',
   styleUrls: ['./user-list.component.scss'],
 })
-export class UserListComponent implements OnInit {
-  items: User[] = [];
-  totalItems = 0;
-  page = 0;
-  pageSize = 10;
-  pageSizeOptions = [5, 10, 25, 100];
-
+export class UserListComponent extends BaseListComponent<User> {
   displayedColumns: string[] = ['name', 'role', 'email', 'delete'];
-  search = '';
 
-  constructor(private _router: Router, private _userService: UserService) {}
-
-  ngOnInit(): void {
-    this.findAllUsers();
-  }
-
-  async findAllUsers(): Promise<void> {
-    const pageList = await this._userService.getAll(
-      this.search,
-      this.page,
-      this.pageSize
-    );
-
-    this.items = pageList.items;
-    this.totalItems = pageList.totalItems;
-  }
-
-  navigateTo(id: number): void {
-    this._router.navigate(['usuarios', id]);
-  }
-
-  async delete(event: Event, id: number): Promise<void> {
-    event.stopPropagation();
-    
-    await this._userService.delete(id);    
-    this.findAllUsers();
-  }
-
-  paginate(pageEvent: PageEvent) {
-    this.page = pageEvent.pageIndex;
-    this.pageSize = pageEvent.pageSize;
-
-    this.findAllUsers();
+  constructor(protected _router: Router, protected _userService: UserService) {
+    super(_router, _userService);
   }
 }
