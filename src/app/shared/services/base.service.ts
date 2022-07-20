@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { PageList } from '../models/interfaces';
+import { PageList } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',

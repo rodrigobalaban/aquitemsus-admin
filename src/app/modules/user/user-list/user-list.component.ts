@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseListComponent } from 'src/app/shared/base/base-list/base-list.component';
-import { User } from 'src/app/shared/models';
+import { User } from 'src/app/shared/interfaces';
 import { UserService } from 'src/app/shared/services';
 
 @Component({
