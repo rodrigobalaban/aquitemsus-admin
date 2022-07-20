@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { User } from '../models';
-import { PageList } from '../models/interfaces';
 import { BaseService } from './base.service';
 
 @Injectable({
