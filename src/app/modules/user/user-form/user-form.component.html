@@ -1,6 +1,6 @@
 <div class="page-header">
     <h2 class="title">
-        <ng-container *ngIf="newUser else editTitle">Novo</ng-container> Usuário
+        <ng-container *ngIf="newRecord else editTitle">Novo</ng-container> Usuário
         <ng-template #editTitle>Editar</ng-template>
     </h2>
     <div class="line">
@@ -39,7 +39,7 @@
         </div>
         <div class="form-buttons">
             <button type="submit" mat-flat-button color="primary" class="button-primary">
-                <ng-container *ngIf="newUser else editButton">Cadastrar</ng-container>
+                <ng-container *ngIf="newRecord else editButton">Cadastrar</ng-container>
                 <ng-template #editButton>Atualizar</ng-template>
             </button>
             <button type="button" mat-button class="cancel-button" (click)="returnToList()">Cancelar</button>

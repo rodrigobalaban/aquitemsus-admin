@@ -26,11 +26,18 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { registerLocaleData } from '@angular/common';
 import pt from '@angular/common/locales/pt';
 import { BaseListComponent } from './shared/base/base-list/base-list.component';
+import { BaseFormComponent } from './shared/base/base-form/base-form.component';
 
 registerLocaleData(pt);
 
 @NgModule({
-  declarations: [AppComponent, ScreenWithSidenavComponent, ToolbarComponent, BaseListComponent],
+  declarations: [
+    AppComponent,
+    ScreenWithSidenavComponent,
+    ToolbarComponent,
+    BaseListComponent,
+    BaseFormComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
