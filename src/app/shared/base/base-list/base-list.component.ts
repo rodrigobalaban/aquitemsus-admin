@@ -18,14 +18,14 @@ export class BaseListComponent<T> implements OnInit {
   displayedColumns: string[] = [];
   search = '';
 
-  constructor(protected _router: Router, protected _service: BaseService<T>) {}
+  constructor(protected router: Router, protected service: BaseService<T>) {}
 
   ngOnInit(): void {
     this.findAllItems();
   }
 
   async findAllItems(): Promise<void> {
-    const pageList = await this._service.getAll(
+    const pageList = await this.service.getAll(
       this.search,
       this.page,
       this.pageSize
@@ -38,7 +38,7 @@ export class BaseListComponent<T> implements OnInit {
   async delete(event: Event, id: number): Promise<void> {
     event.stopPropagation();
 
-    await this._service.delete(id);
+    await this.service.delete(id);
     this.findAllItems();
   }
 

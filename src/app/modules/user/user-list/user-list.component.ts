@@ -12,7 +12,7 @@ import { UserService } from 'src/app/shared/services';
 export class UserListComponent extends BaseListComponent<User> {
   displayedColumns: string[] = ['name', 'role', 'email', 'delete'];
 
-  constructor(protected _router: Router, protected _userService: UserService) {
-    super(_router, _userService);
+  constructor(protected router: Router, protected userService: UserService) {
+    super(router, userService);
   }
 }

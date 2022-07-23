@@ -10,6 +10,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     children: [
       {
+        path: 'estabelecimentos',
+        loadChildren: () =>
+          import('./modules/establishment').then((m) => m.EstablishmentModule),
+      },
+      {
         path: 'importar-dados',
         loadChildren: () =>
           import('./modules/import-data').then((m) => m.ImportDataModule),
