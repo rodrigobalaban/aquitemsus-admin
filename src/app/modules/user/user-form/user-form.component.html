@@ -10,32 +10,86 @@
 
 <main class="form-page">
     <form [formGroup]="form" (ngSubmit)="onSubmit()">
-        <h3 class="section-title">Dados do Usuário</h3>
-        <div class="white-card column">
-            <mat-form-field appearance="standard">
-                <mat-label>Nome</mat-label>
-                <input type="text" matInput placeholder="Nome" formControlName="name">
-                <mat-icon fontSet="material-icons-outlined" matPrefix>person</mat-icon>
-                <mat-error *ngIf="form.get('name')?.invalid">
-                    Informe um nome.
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="standard">
-                <mat-label>E-mail</mat-label>
-                <input type="email" class="input" matInput placeholder="E-mail" formControlName="email">
-                <mat-icon fontSet="material-icons-outlined" matPrefix>email</mat-icon>
-                <mat-error *ngIf="form.get('email')?.invalid">
-                    Informe um e-mail válido.
-                </mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="standard">
-                <mat-label>Senha</mat-label>
-                <input type="password" class="input" matInput placeholder="Senha" formControlName="password">
-                <mat-icon fontSet="material-icons-outlined" matPrefix>lock</mat-icon>
-                <mat-error *ngIf="form.get('password')?.invalid">
-                    Informe uma senha.
-                </mat-error>
-            </mat-form-field>
+        <div class="row">
+            <div class="column">
+                <h3 class="section-title">Dados do Usuário</h3>
+                <div class="white-card column">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Nome</mat-label>
+                        <input type="text" matInput placeholder="Nome" formControlName="name">
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>person</mat-icon>
+                        <mat-error *ngIf="form.get('name')?.invalid">
+                            Informe um nome.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard">
+                        <mat-label>E-mail</mat-label>
+                        <input type="email" class="input" matInput placeholder="E-mail" formControlName="email">
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>email</mat-icon>
+                        <mat-error *ngIf="form.get('email')?.invalid">
+                            Informe um e-mail válido.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard">
+                        <mat-label>Senha</mat-label>
+                        <input type="password" class="input" matInput placeholder="Senha" formControlName="password">
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>lock</mat-icon>
+                        <mat-error *ngIf="form.get('password')?.invalid">
+                            Informe uma senha.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard">
+                        <mat-label>Perfil</mat-label>
+                        <mat-select placeholder="Perfil" formControlName="role">
+                            <mat-option [value]="'Administrator'">Administrador</mat-option>
+                            <mat-option [value]="'Employee'">Funcionário</mat-option>
+                        </mat-select>
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>admin_panel_settings</mat-icon>
+                        <mat-error *ngIf="form.get('role')?.invalid">
+                            Selecione uma opção.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div *ngIf="isEmployee" class="column">
+                <h3 class="section-title">Acesso aos Estabelecimentos</h3>
+                <div class="line-search white-card">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput type="text" [formControl]="searchEstablishmentsControl" [matAutocomplete]="autoEstablisment">
+                        <button type="button" *ngIf="searchEstablishmentsControl.value" (click)="clearSearchEstablishment()" matSuffix
+                            mat-icon-button aria-label="Limpar">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-autocomplete #autoEstablisment="matAutocomplete">
+                            <mat-option *ngFor="let establishment of filteredEstablishmentsOptions | async"
+                                (click)="addAllowedEstablishment(establishment)">
+                                <span>{{ establishment.name }}</span> |
+                                <small>{{ establishment.address.city.name }} - {{ establishment.address.city.state }}</small>
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div id="establishments-list" class="white-card grid">
+                    <table class="form-table mat-table">
+                        <tr class="mat-header-row">
+                            <th class="mat-header-cell">Nome</th>
+                            <th class="mat-header-cell">Cidade</th>
+                            <th class="mat-header-cell mat-column-delete"></th>
+                        </tr>
+                        <tr *ngFor="let establishment of formAllowedEstablishments.controls; index as index" class="mat-row">
+                            <td class="mat-cell">{{ establishment.get('name')?.value }}</td>
+                            <td class="mat-cell">{{ getCityName(establishment) }}</td>
+                            <td class="mat-cell mat-column-delete">
+                                <button mat-icon-button color="warn" aria-label="Remover Estabelecimento"
+                                    (click)="removeAllowedEstablishment(index)">
+                                    <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>
         <div class="form-buttons">
             <button type="submit" mat-flat-button color="primary" class="button-primary">
