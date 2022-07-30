@@ -16,4 +16,5 @@ export interface Establishment {
   phone: string;
   specialties: Specialty[];
   professionals: any[];
+  scheduling: boolean;
 }

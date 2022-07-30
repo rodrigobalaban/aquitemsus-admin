@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { PageEvent } from '@angular/material/paginator';
 import { Router } from '@angular/router';
 import { BaseService } from '../../services/base.service';
+import { debounceTime, distinctUntilChanged, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-base-list',
@@ -16,17 +18,26 @@ export class BaseListComponent<T> implements OnInit {
   pageSizeOptions = [5, 10, 25, 100];
 
   displayedColumns: string[] = [];
-  search = '';
+  search = new FormControl('');
 
   constructor(protected router: Router, protected service: BaseService<T>) {}
 
   ngOnInit(): void {
-    this.findAllItems();
+    this.observeSearch();
+  }
+
+  observeSearch(): void {
+    this.search.valueChanges
+      .pipe(startWith(''), debounceTime(400), distinctUntilChanged())
+      .subscribe(() => {
+        this.page = 0;
+        this.findAllItems();
+      });
   }
 
   async findAllItems(): Promise<void> {
     const pageList = await this.service.getAll(
-      this.search,
+      this.search.value,
       this.page,
       this.pageSize
     );
@@ -47,5 +58,9 @@ export class BaseListComponent<T> implements OnInit {
     this.pageSize = pageEvent.pageSize;
 
     this.findAllItems();
+  }
+
+  clearSearch(): void {
+    this.search.setValue('');
   }
 }

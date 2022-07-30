@@ -1,0 +1,247 @@
+<div class="page-header">
+    <h2 class="title">
+        <ng-container *ngIf="newRecord else editTitle">Novo</ng-container> Estabelecimento
+        <ng-template #editTitle>Editar</ng-template>
+    </h2>
+    <div class="line">
+        <mat-divider></mat-divider>
+    </div>
+</div>
+
+<main class="form-page">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="column">
+                <h3 class="section-title">Dados do Estabelecimento</h3>
+                <div class="white-card column">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Nome</mat-label>
+                        <input type="text" matInput placeholder="Nome" formControlName="name">
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>description</mat-icon>
+                        <mat-error *ngIf="form.get('name')?.invalid">
+                            Informe um nome.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard">
+                        <mat-label>Categoria</mat-label>
+                        <mat-select [compareWith]="compareCategories" placeholder="Categoria"
+                            formControlName="category">
+                            <mat-option *ngFor="let category of categories" [value]="category">
+                                {{ category.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>category</mat-icon>
+                        <mat-error *ngIf="form.get('category')?.invalid">
+                            Selecione uma categoria.
+                        </mat-error>
+                    </mat-form-field>
+                    <ng-container formGroupName="address">
+                        <mat-form-field appearance="standard">
+                            <mat-label>Logradouro</mat-label>
+                            <input type="text" matInput placeholder="Logradouro" formControlName="street">
+                            <mat-icon fontSet="material-icons-outlined" matPrefix>location_on</mat-icon>
+                            <mat-error *ngIf="formAddress.get('street')?.invalid">
+                                Informe um logradouro.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Número</mat-label>
+                            <input type="text" matInput placeholder="Número" formControlName="number">
+                            <mat-icon fontSet="material-icons-outlined" matPrefix>pin</mat-icon>
+                            <mat-error *ngIf="formAddress.get('number')?.invalid">
+                                Informe um número.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Complemento</mat-label>
+                            <input type="text" matInput placeholder="Complemento" formControlName="complement">
+                            <mat-icon fontSet="material-icons-outlined" matPrefix>signpost</mat-icon>
+                        </mat-form-field>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Bairro</mat-label>
+                            <input type="text" matInput placeholder="Bairro" formControlName="district">
+                            <mat-icon fontSet="material-icons-outlined" matPrefix>home_work</mat-icon>
+                            <mat-error *ngIf="formAddress.get('district')?.invalid">
+                                Informe um bairro.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Cidade</mat-label>
+                            <input type="text" matInput formControlName="city" [matAutocomplete]="autoCity">
+                            <mat-icon fontSet="material-icons-outlined" matPrefix>location_city</mat-icon>
+                            <mat-autocomplete #autoCity="matAutocomplete" [displayWith]="displayCity">
+                                <mat-option *ngFor="let city of filteredCityOptions | async" [value]="city">
+                                    {{ city.name }} - {{ city.state }}
+                                </mat-option>
+                            </mat-autocomplete>
+                            <mat-error *ngIf="formAddress.get('city')?.invalid">
+                                Informe uma cidade.
+                            </mat-error>
+                        </mat-form-field>
+                    </ng-container>
+                    <mat-form-field appearance="standard">
+                        <mat-label>Telefone</mat-label>
+                        <input type="tel" matInput placeholder="Telefone" formControlName="phone">
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>call</mat-icon>
+                        <mat-error *ngIf="form.get('phone')?.invalid">
+                            Informe um telefone.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard">
+                        <mat-label>E-mail</mat-label>
+                        <input type="email" matInput placeholder="E-mail" formControlName="email">
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>mail</mat-icon>
+                        <mat-error *ngIf="form.get('email')?.invalid">
+                            Informe um e-mail válido.
+                        </mat-error>
+                    </mat-form-field>
+                    <ng-container formGroupName="localization">
+                        <mat-form-field appearance="standard">
+                            <mat-label>Latitude</mat-label>
+                            <input type="number" matInput placeholder="Latitude" formControlName="latitude">
+                            <mat-icon fontSet="material-icons-outlined" matPrefix>my_location</mat-icon>
+                            <mat-error *ngIf="formLocalization.get('latitude')?.invalid">
+                                Informe a latitude.
+                            </mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="standard">
+                            <mat-label>Longitude</mat-label>
+                            <input type="number" matInput placeholder="Longitude" formControlName="longitude">
+                            <mat-icon fontSet="material-icons-outlined" matPrefix>location_searching</mat-icon>
+                            <mat-error *ngIf="formLocalization.get('longitude')?.invalid">
+                                Informe a longitude.
+                            </mat-error>
+                        </mat-form-field>
+                    </ng-container>
+                    <mat-form-field appearance="standard">
+                        <mat-label>Aberto 24 Horas?</mat-label>
+                        <mat-select placeholder="Aberto 24 Horas?" formControlName="alwaysOpen">
+                            <mat-option [value]="true">Sim</mat-option>
+                            <mat-option [value]="false">Não</mat-option>
+                        </mat-select>
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>local_convenience_store</mat-icon>
+                        <mat-error *ngIf="form.get('alwaysOpen')?.invalid">
+                            Selecione uma opção.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard">
+                        <mat-label>Permite Agendamentos?</mat-label>
+                        <mat-select placeholder="Aberto 24 Horas?" formControlName="scheduling">
+                            <mat-option [value]="true">Sim</mat-option>
+                            <mat-option [value]="false">Não</mat-option>
+                        </mat-select>
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>schedule</mat-icon>
+                        <mat-error *ngIf="form.get('alwaysOpen')?.invalid">
+                            Selecione uma opção.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+            <div class="column">
+                <h3 class="section-title">Especialidades</h3>
+                <div class="line-search white-card">
+                    <mat-form-field appearance="standard">
+                        <mat-label>Buscar</mat-label>
+                        <input matInput type="text" [formControl]="searchSpecialtiesControl" [matAutocomplete]="autoSpecialty">
+                        <button type="button" *ngIf="searchSpecialtiesControl.value" (click)="clearSearchSpecialty()" matSuffix
+                            mat-icon-button aria-label="Limpar">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                        <mat-autocomplete #autoSpecialty="matAutocomplete">
+                            <mat-option *ngFor="let specialty of filteredSpecialtyOptions | async"
+                                (click)="addSpecialty(specialty)">
+                                {{ specialty.name }}
+                            </mat-option>
+                        </mat-autocomplete>
+                    </mat-form-field>
+                </div>
+                <div id="specialties-list" class="white-card grid">
+                    <table class="mat-table">
+                        <tr class="mat-header-row">
+                            <th class="mat-header-cell">Nome</th>
+                            <th class="mat-header-cell mat-column-delete"></th>
+                        </tr>
+                        <tr *ngFor="let specialty of formSpecialties.controls; index as index" class="mat-row">
+                            <td class="mat-cell">{{ specialty.get('name')?.value }}</td>
+                            <td class="mat-cell mat-column-delete">
+                                <button mat-icon-button color="warn" aria-label="Remover Especialidade"
+                                    (click)="removeSpecialty(index)">
+                                    <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <h3 class="section-title">Horário de Atendimento</h3>
+                <div class="white-card grid">
+                    <table class="mat-table" formArrayName="openingHours">
+                        <tr class="mat-header-row">
+                            <th class="mat-header-cell">Dia da Semana</th>
+                            <th class="mat-header-cell">Horário Início</th>
+                            <th class="mat-header-cell">Horário Fim</th>
+                            <th class="mat-header-cell mat-column-delete"></th>
+                        </tr>
+                        <tr *ngFor="let day of formOpeningHours.controls; index as index" [formGroupName]="index"
+                            class="mat-row">
+                            <td class="mat-cell">
+                                <mat-form-field appearance="standard">
+                                    <mat-select placeholder="Dia da Semana" formControlName="dayOfWeek">
+                                        <mat-option value="Sunday">Domingo</mat-option>
+                                        <mat-option value="Monday">Segunda-feira</mat-option>
+                                        <mat-option value="Tuesday">Terça-feira</mat-option>
+                                        <mat-option value="Wednesday">Quarta-feira</mat-option>
+                                        <mat-option value="Thursday">Quinta-feira</mat-option>
+                                        <mat-option value="Friday">Sexta-feira</mat-option>
+                                        <mat-option value="Saturday">Sábado</mat-option>
+                                    </mat-select>
+                                    <mat-error *ngIf="formOpeningHours.controls[index].get('dayOfWeek')?.invalid">
+                                        Selecione um dia da semana.
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+                            <td class="mat-cell">
+                                <mat-form-field appearance="standard">
+                                    <input type="time" matInput placeholder="Horário Início"
+                                        formControlName="openingTime">
+                                    <mat-error *ngIf="formOpeningHours.controls[index].get('openingTime')?.invalid">
+                                        Informe um horário de início.
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+                            <td class="mat-cell">
+                                <mat-form-field appearance="standard">
+                                    <input type="time" matInput placeholder="Horário Fim" formControlName="closingTime">
+                                    <mat-error *ngIf="formOpeningHours.controls[index].get('closingTime')?.invalid">
+                                        Informe um horário fim.
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+                            <td class="mat-cell mat-column-delete">
+                                <button mat-icon-button color="warn" aria-label="Remover Horário de Atendimento"
+                                    (click)="removeOpeningHours(index)">
+                                    <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="button" mat-button color="primary" (click)="addOpeningHours()">Adicionar
+                        Horário</button>
+                </div>
+            </div>
+            <div class="column">
+                <h3 class="section-title">Profissionais</h3>
+            </div>
+        </div>
+        <div class="form-buttons">
+            <button type="submit" mat-flat-button color="primary" class="button-primary">
+                <ng-container *ngIf="newRecord else editButton">Cadastrar</ng-container>
+                <ng-template #editButton>Atualizar</ng-template>
+            </button>
+            <button type="button" mat-button class="cancel-button" (click)="returnToList()">Cancelar</button>
+        </div>
+    </form>
+</main>

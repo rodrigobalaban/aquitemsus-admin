@@ -33,8 +33,12 @@ export class BaseFormComponent<T extends BaseRecord> implements OnInit {
       this.newRecord = false;
 
       const record = await this.baseService.getById(id);
-      this.form.patchValue(record);
+      this.patchValue(record);
     }
+  }
+
+  patchValue(value: T) {
+    this.form.patchValue(value);
   }
 
   buildFormControls(): any {}

@@ -10,8 +10,8 @@
     <div class="line-search white-card">
         <mat-form-field appearance="standard">
             <mat-label>Buscar</mat-label>
-            <input matInput type="text" [(ngModel)]="search" (keyup)="findAllItems()">
-            <button *ngIf="search" matSuffix mat-icon-button aria-label="Limpar" (click)="search=''">
+            <input matInput type="text" [formControl]="search">
+            <button *ngIf="search.value" matSuffix mat-icon-button aria-label="Limpar" (click)="clearSearch()">
                 <mat-icon>close</mat-icon>
             </button>
         </mat-form-field>
