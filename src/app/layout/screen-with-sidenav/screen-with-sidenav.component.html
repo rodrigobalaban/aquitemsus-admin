@@ -19,11 +19,11 @@
                 <mat-icon fontSet="material-icons-outlined" matListIcon>place</mat-icon>
                 <p matLine>Estabelecimentos</p>
             </a>
-            <a mat-list-item [routerLink]="['/importar-dados']" [routerLinkActive]="['active']">
+            <a *ngIf="userIsAdmin" mat-list-item [routerLink]="['/importar-dados']" [routerLinkActive]="['active']">
                 <mat-icon fontSet="material-icons-outlined" matListIcon>file_upload</mat-icon>
                 <p matLine>Importar Dados</p>
             </a>
-            <a mat-list-item [routerLink]="['/usuarios']" [routerLinkActive]="['active']">
+            <a *ngIf="userIsAdmin" mat-list-item [routerLink]="['/usuarios']" [routerLinkActive]="['active']">
                 <mat-icon fontSet="material-icons-outlined" matListIcon>people</mat-icon>
                 <p matLine>Usuários</p>
             </a>
