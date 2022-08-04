@@ -21,7 +21,7 @@ export class AuthService {
     return 'Bearer ' + userSession?.token;
   }
 
-  authenticate(userCredential: UserAuth) {
+  authenticate(userCredential: UserAuth): Promise<UserCredential> {
     return this.http
       .post<UserCredential>(`${environment.apiUrl}/auth`, userCredential)
       .pipe(tap((credential) => this.saveUserAuthSession(credential)))
@@ -40,7 +40,7 @@ export class AuthService {
     return tokenExpiration > now;
   }
 
-  private getUserAuthSession(): UserCredential {
+  getUserAuthSession(): UserCredential {
     return JSON.parse(
       localStorage.getItem(this.sessionStorage)!
     ) as UserCredential;
