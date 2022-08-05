@@ -24,7 +24,7 @@
                     </mat-form-field>
                     <mat-form-field appearance="standard">
                         <mat-label>Categoria</mat-label>
-                        <mat-select [compareWith]="compareCategories" placeholder="Categoria"
+                        <mat-select [compareWith]="compareOptionsSelect" placeholder="Categoria"
                             formControlName="category">
                             <mat-option *ngFor="let category of categories" [value]="category">
                                 {{ category.name }}
@@ -155,7 +155,7 @@
                         </mat-autocomplete>
                     </mat-form-field>
                 </div>
-                <div id="specialties-list" class="white-card grid">
+                <div class="white-card grid grow">
                     <table class="form-table mat-table">
                         <tr class="mat-header-row">
                             <th class="mat-header-cell">Nome</th>
@@ -177,7 +177,7 @@
         <div class="row">
             <div class="column">
                 <h3 class="section-title">Horário de Atendimento</h3>
-                <div class="white-card grid">
+                <div class="white-card grid grow">
                     <table class="form-table mat-table" formArrayName="openingHours">
                         <tr class="mat-header-row">
                             <th class="mat-header-cell">Dia da Semana</th>
@@ -234,6 +234,49 @@
             </div>
             <div class="column">
                 <h3 class="section-title">Profissionais</h3>
+                <div class="white-card grid grow">
+                    <table class="form-table mat-table" formArrayName="professionals">
+                        <tr class="mat-header-row">
+                            <th class="mat-header-cell">Nome</th>
+                            <th class="mat-header-cell">Especialidade</th>
+                            <th class="mat-header-cell mat-column-delete"></th>
+                        </tr>
+                        <tr *ngFor="let professional of formProfessionals.controls; index as index" [formGroupName]="index"
+                            class="mat-row">
+                            <td class="mat-cell">                                
+                                <mat-form-field appearance="standard">
+                                    <mat-label>Nome</mat-label>
+                                    <input type="text" matInput placeholder="Nome" formControlName="name">
+                                    <mat-icon fontSet="material-icons-outlined" matPrefix>description</mat-icon>
+                                    <mat-error>
+                                        Informe um nome.
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>
+                            <td class="mat-cell">
+                                <mat-form-field appearance="standard">
+                                    <mat-select [compareWith]="compareOptionsSelect" placeholder="Especialidade" formControlName="specialty">
+                                        <mat-option *ngFor="let specialty of establishmentSpecialties" [value]="specialty">
+                                            {{ specialty.name }}
+                                        </mat-option>
+                                    </mat-select>
+                                    <mat-error>
+                                        Selecione uma especialidade.
+                                    </mat-error>
+                                </mat-form-field>
+                            </td>                            
+                            <td class="mat-cell mat-column-delete">
+                                <button mat-icon-button color="warn" aria-label="Remover Horário de Atendimento"
+                                    (click)="removeProfessional(index)">
+                                    <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                    <button type="button" mat-button color="primary" (click)="addProfessional()">
+                        Adicionar Profissional
+                    </button>
+                </div>
             </div>
         </div>
         <div class="form-buttons">

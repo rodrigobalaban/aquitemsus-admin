@@ -20,6 +20,7 @@ import {
   City,
   Establishment,
   OpeningHours,
+  Professional,
   Specialty,
 } from 'src/app/shared/interfaces';
 import { MessageService } from 'src/app/shared/services';
@@ -103,8 +104,16 @@ export class EstablishmentFormComponent extends BaseFormComponent<Establishment>
     return this.form.get('openingHours') as FormArray;
   }
 
+  get formProfessionals(): FormArray {
+    return this.form.get('professionals') as FormArray;
+  }
+
   get formSpecialties(): FormArray {
     return this.form.get('specialties') as FormArray;
+  }
+
+  get establishmentSpecialties(): Specialty[] {
+    return this.formSpecialties.value;
   }
 
   async getCategories(): Promise<void> {
@@ -120,6 +129,10 @@ export class EstablishmentFormComponent extends BaseFormComponent<Establishment>
 
     establishment.openingHours.forEach((openingHours) => {
       this.addOpeningHours(openingHours);
+    });
+
+    establishment.professionals.forEach((professional) => {
+      this.addProfessional(professional);
     });
   }
 
@@ -182,6 +195,24 @@ export class EstablishmentFormComponent extends BaseFormComponent<Establishment>
     this.searchSpecialtiesControl.setValue('');
   }
 
+  addProfessional(professional?: Professional): void {
+    var control = this.formBuilder.group({
+      id: [null],
+      name: [null, Validators.required],
+      specialty: [null, Validators.required],
+    });
+
+    if (professional) {
+      control.patchValue(professional);
+    }
+
+    this.formProfessionals.push(control);
+  }
+
+  removeProfessional(index: number): void {
+    this.formProfessionals.removeAt(index);
+  }
+
   addOpeningHours(openingHours?: OpeningHours): void {
     var control = this.formBuilder.group({
       id: [null],
@@ -201,7 +232,10 @@ export class EstablishmentFormComponent extends BaseFormComponent<Establishment>
     this.formOpeningHours.removeAt(index);
   }
 
-  compareCategories(c1: Category, c2: Category): boolean {
+  compareOptionsSelect(
+    c1: Category | Specialty,
+    c2: Category | Specialty
+  ): boolean {
     return c1 && c2 ? c1.id === c2.id : c1 === c2;
   }
 }

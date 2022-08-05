@@ -5,6 +5,7 @@ export * from './establishment';
 export * from './localization';
 export * from './opening-hours';
 export * from './page-list';
+export * from './professional';
 export * from './specialty';
 export * from './user';
 export * from './user-auth';
