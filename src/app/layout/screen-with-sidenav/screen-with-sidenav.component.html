@@ -7,7 +7,7 @@
                 <mat-icon fontSet="material-icons-outlined" matListIcon>home</mat-icon>
                 <p matLine>Início</p>
             </a>
-            <a mat-list-item>
+            <a mat-list-item [routerLink]="['/agendamentos']" [routerLinkActive]="['active']">
                 <mat-icon fontSet="material-icons-outlined" matListIcon>schedule</mat-icon>
                 <p matLine>Agendamentos</p>
             </a>

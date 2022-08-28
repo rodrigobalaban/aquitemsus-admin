@@ -2,8 +2,11 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 1em;
+    gap: 20px;
 
     .welcome-user {
+        flex: 1;
+
         .name, 
         .message {
             margin: 0;
@@ -11,6 +14,23 @@
 
         .name {
             font-weight: bold;
+        }
+    }
+
+    .establishment-context {
+        display: flex;
+        text-align: right;
+        align-self: center;
+
+        &:hover {
+            cursor: pointer;
+        }
+
+        .category,
+        .name {
+            margin: 0;
+            font-weight: bold;
+            line-height: 1.2;
         }
     }
 }

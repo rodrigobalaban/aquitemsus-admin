@@ -1,0 +1,57 @@
+<header class="page-header">
+    <h2 class="title">Agendamentos</h2>
+    <div class="line">
+        <mat-divider></mat-divider>
+    </div>
+    <button mat-flat-button color="primary" class="button-primary" [routerLink]="['novo']">Novo</button>
+</header>
+
+<main class="panel-page">
+    <div class="row">
+        <div id="calendar" class="column">
+            <h3 class="section-title">Calendário</h3>
+            <div class="white-card column">
+                <mat-calendar [(selected)]="daySelected" (selectedChange)="findSchedulesOfDay()"
+                    [dateClass]="dateClass()"></mat-calendar>
+            </div>
+        </div>
+        <div id="schedules-day" class="column">
+            <h3 class="section-title">Atendimentos do Dia</h3>
+            <div class="line-search white-card">
+                <mat-form-field appearance="standard">
+                    <mat-label>Buscar</mat-label>
+                    <input matInput type="text">
+                    <button type="button" matSuffix mat-icon-button aria-label="Limpar">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div class="white-card grid">
+                <table class="form-table mat-table">
+                    <tr class="mat-header-row">
+                        <th class="mat-header-cell">Nome</th>
+                        <th class="mat-header-cell">Horário</th>
+                        <th class="mat-header-cell">Profissional</th>
+                        <th class="mat-header-cell">Status</th>
+                        <th class="mat-header-cell mat-column-delete"></th>
+                    </tr>
+                    <tr *ngFor="let schedule of schedules" class="mat-row" [routerLink]="[schedule.id]">
+                        <td class="mat-cell">{{ schedule.userSus ? schedule.userSus.name : '--' }}</td>
+                        <td class="mat-cell">{{ getHours(schedule.date) | date: 'HH:mm' }}h.</td>
+                        <td class="mat-cell">{{ schedule.professional.name }}</td>
+                        <td class="mat-cell">{{ schedule.status }}</td>
+                        <td class="mat-cell mat-column-delete">
+                            <button mat-icon-button color="warn" aria-label="Remover Agendamento">
+                                <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <div id="no-schedules" *ngIf="schedules.length === 0">
+                    <img src="assets/img/no-schedules.jpg">
+                    <h3>Não foram encontrados agendamentos para esta data.</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

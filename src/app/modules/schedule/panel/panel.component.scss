@@ -1,0 +1,32 @@
+#calendar {
+  flex: 1;
+}
+
+#schedules-day {
+  flex: 2;
+
+  .grid {
+    flex: 1;
+  }
+}
+
+::ng-deep .has-schedules {
+  .mat-calendar-body-cell-content {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #418de4;
+  }
+
+  .mat-calendar-body-selected {
+    color: #fff;
+  }
+}
+
+#no-schedules {
+  margin: auto;
+  text-align: center;
+
+  img {
+    max-width: 400px;
+  }
+}

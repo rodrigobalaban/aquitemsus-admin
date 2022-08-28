@@ -15,6 +15,7 @@ import { ScreenWithSidenavComponent, ToolbarComponent } from './layout';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthTokenInterceptor } from './shared/http';
 
+import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatMenuModule } from '@angular/material/menu';
@@ -43,6 +44,7 @@ registerLocaleData(pt);
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    MatButtonModule,
     MatIconModule,
     MatListModule,
     MatMenuModule,
