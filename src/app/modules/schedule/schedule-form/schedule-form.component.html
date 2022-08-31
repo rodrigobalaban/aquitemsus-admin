@@ -23,8 +23,8 @@
                     </mat-form-field>
                     <mat-form-field appearance="standard">
                         <mat-label>Status</mat-label>
-                        <mat-select placeholder="Perfil" formControlName="status">
-                            <mat-option [value]="'Available'">Disponível</mat-option>
+                        <mat-select placeholder="Perfil" formControlName="status" [disabled]="newRecord">
+                            <mat-option *ngIf="newRecord" [value]="'Available'">Disponível</mat-option>
                             <mat-option [value]="'Reserved'">Reservado</mat-option>
                             <mat-option [value]="'Confirmed'">Confirmado</mat-option>
                             <mat-option [value]="'Complete'">Concluído</mat-option>

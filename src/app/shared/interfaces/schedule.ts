@@ -6,7 +6,7 @@ export interface Schedule {
     id: number;
     establishment: Establishment;
     date: string;
-    status: number;
+    status: string;
     userSus: User;
     professional: Professional;
 }

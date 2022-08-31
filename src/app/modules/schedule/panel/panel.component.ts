@@ -14,7 +14,8 @@ export class PanelComponent implements OnInit {
   daySelected: Date | null = new Date();
   monthSelected?: Date;
   daysWithSchedules: number[] = [];
-  schedules: Schedule[] = [];
+  daySchedules: Schedule[] = [];
+  reservedSchedules: Schedule[] = [];
 
   constructor(
     private _establishmentContextService: EstablishmentContextService,
@@ -26,13 +27,20 @@ export class PanelComponent implements OnInit {
 
   ngOnInit(): void {
     this.findSchedulesOfDay();
+    this.findReservedSchedules();
   }
 
   async findSchedulesOfDay(): Promise<void> {
-    this.schedules = await this._scheduleService.getSchedulesOfDay(
+    this.daySchedules = await this._scheduleService.getSchedulesOfDay(
       this.daySelected!.getDate(),
       this.daySelected!.getMonth() + 1,
       this.daySelected!.getFullYear(),
+      this.establishment.id
+    );
+  }
+
+  async findReservedSchedules(): Promise<void> {
+    this.reservedSchedules = await this._scheduleService.getReservedSchedules(
       this.establishment.id
     );
   }
@@ -49,12 +57,12 @@ export class PanelComponent implements OnInit {
 
   async onMonthChange(date: Date): Promise<void> {
     this.monthSelected = date;
-    await this.findDaysWithSchedule();
+    await this.findDaysWithSchedules();
 
     this.setClassDatesWithSchedules();
   }
 
-  async findDaysWithSchedule(): Promise<void> {
+  async findDaysWithSchedules(): Promise<void> {
     this.daysWithSchedules =
       await this._scheduleService.getDaysOfMonthWithSchedules(
         this.monthSelected!.getMonth() + 1,
@@ -70,7 +78,38 @@ export class PanelComponent implements OnInit {
     });
   }
 
-  getHours(dateISOString: string): Date {
+  toDate(dateISOString: string): Date {
     return new Date(dateISOString);
+  }
+
+  getStatusDescription(status: string): string {
+    switch (status) {
+      case 'Available':
+        return 'Disponível';
+      case 'Reserved':
+        return 'Reservado';
+      case 'Confirmed':
+        return 'Confirmado';
+      case 'Complete':
+        return 'Completo';
+      case 'Canceled':
+        return 'Cancelado';
+      default:
+        return '';
+    }
+  }
+
+  onConfirmSchedule(schedule: Schedule) {
+    schedule.status = 'Confirmed';
+    this.updateSchedule(schedule);
+  }
+
+  onCancelSchedule(schedule: Schedule) {
+    schedule.status = 'Canceled';
+    this.updateSchedule(schedule);
+  }
+
+  async updateSchedule(schedule: Schedule): Promise<void> {
+    await this._scheduleService.update(schedule.id, schedule);
   }
 }

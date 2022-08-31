@@ -34,4 +34,12 @@ export class ScheduleService extends BaseService<Schedule> {
       `${environment.apiUrl}/${this.moduleUrl}/days-of-month?month=${month}&year=${year}&idEstablishment=${idEstablishment}`
     ).toPromise();
   }
+
+  getReservedSchedules(
+    idEstablishment: number
+  ): Promise<Schedule[]> {
+    return this.http.get<Schedule[]>(
+      `${environment.apiUrl}/${this.moduleUrl}/reserved?idEstablishment=${idEstablishment}`
+    ).toPromise();
+  }
 }
