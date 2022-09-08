@@ -6,6 +6,8 @@ export * from './localization';
 export * from './opening-hours';
 export * from './page-list';
 export * from './professional';
+export * from './rating';
+export * from './rating-avg';
 export * from './schedule';
 export * from './specialty';
 export * from './user';
