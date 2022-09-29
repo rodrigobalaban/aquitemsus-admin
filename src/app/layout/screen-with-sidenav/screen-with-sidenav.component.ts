@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserRole } from 'src/app/shared/enums';
 import { User } from 'src/app/shared/interfaces';
 import { AuthService } from 'src/app/shared/services';
 
@@ -15,7 +16,7 @@ export class ScreenWithSidenavComponent {
   }
 
   get userIsAdmin(): boolean {
-    return this.user.role === "Administrator";
+    return this.user.role === UserRole.Administrator;
   }
 
 }

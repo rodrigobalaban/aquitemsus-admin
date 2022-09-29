@@ -7,11 +7,11 @@
                 <mat-icon fontSet="material-icons-outlined" matListIcon>home</mat-icon>
                 <p matLine>Início</p>
             </a>
-            <a mat-list-item [routerLink]="['/agendamentos']" [routerLinkActive]="['active']">
+            <a *ngIf="!userIsAdmin" mat-list-item [routerLink]="['/agendamentos']" [routerLinkActive]="['active']">
                 <mat-icon fontSet="material-icons-outlined" matListIcon>schedule</mat-icon>
                 <p matLine>Agendamentos</p>
             </a>
-            <a mat-list-item [routerLink]="['/avaliacoes']" [routerLinkActive]="['active']">
+            <a *ngIf="!userIsAdmin" mat-list-item [routerLink]="['/avaliacoes']" [routerLinkActive]="['active']">
                 <mat-icon fontSet="material-icons-outlined" matListIcon>star_outline</mat-icon>
                 <p matLine>Avaliações</p>
             </a>
