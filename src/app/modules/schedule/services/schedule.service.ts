@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Schedule } from 'src/app/shared/interfaces';
+import { Schedule, ScheduleReport } from 'src/app/shared/interfaces';
 import { BaseService } from 'src/app/shared/services/base.service';
 import { environment } from 'src/environments/environment';
 
@@ -20,9 +20,11 @@ export class ScheduleService extends BaseService<Schedule> {
     year: number,
     idEstablishment: number
   ): Promise<Schedule[]> {
-    return this.http.get<Schedule[]>(
-      `${environment.apiUrl}/${this.moduleUrl}?day=${day}&month=${month}&year=${year}&idEstablishment=${idEstablishment}`
-    ).toPromise();
+    return this.http
+      .get<Schedule[]>(
+        `${environment.apiUrl}/${this.moduleUrl}?day=${day}&month=${month}&year=${year}&idEstablishment=${idEstablishment}`
+      )
+      .toPromise();
   }
 
   getDaysOfMonthWithSchedules(
@@ -30,16 +32,26 @@ export class ScheduleService extends BaseService<Schedule> {
     year: number,
     idEstablishment: number
   ): Promise<number[]> {
-    return this.http.get<number[]>(
-      `${environment.apiUrl}/${this.moduleUrl}/days-of-month?month=${month}&year=${year}&idEstablishment=${idEstablishment}`
-    ).toPromise();
+    return this.http
+      .get<number[]>(
+        `${environment.apiUrl}/${this.moduleUrl}/days-of-month?month=${month}&year=${year}&idEstablishment=${idEstablishment}`
+      )
+      .toPromise();
   }
 
-  getReservedSchedules(
-    idEstablishment: number
-  ): Promise<Schedule[]> {
-    return this.http.get<Schedule[]>(
-      `${environment.apiUrl}/${this.moduleUrl}/reserved?idEstablishment=${idEstablishment}`
-    ).toPromise();
+  getReservedSchedules(idEstablishment: number): Promise<Schedule[]> {
+    return this.http
+      .get<Schedule[]>(
+        `${environment.apiUrl}/${this.moduleUrl}/reserved?idEstablishment=${idEstablishment}`
+      )
+      .toPromise();
+  }
+
+  getScheduleReport(idEstablishment: number): Promise<ScheduleReport> {
+    return this.http
+      .get<ScheduleReport>(
+        `${environment.apiUrl}/${this.moduleUrl}/report?idEstablishment=${idEstablishment}`
+      )
+      .toPromise();
   }
 }

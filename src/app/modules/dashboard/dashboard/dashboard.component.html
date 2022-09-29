@@ -1,0 +1,44 @@
+<div class="row" *ngIf="scheduleReport">
+  <div id="schedules" class="column">
+    <div class="schedule white-card pointer" [routerLink]="['/agendamentos']">
+      <div class="text">
+        <h2 class="count">{{ scheduleReport.schedulesToday }}</h2>
+        <h3 class="title" [ngPlural]="scheduleReport.schedulesToday">
+          <ng-template ngPluralCase="=1">Atendimento Agendado</ng-template>
+          <ng-template ngPluralCase="other">Atendimentos Agendados</ng-template>
+        </h3>
+        <span>Hoje, {{ today | date: 'dd' }} de {{ today | date: 'MMMM' }}.</span>
+      </div>
+      <img src="assets/img/schedule.png">
+    </div>
+    <div class="schedule reserved white-card pointer" [routerLink]="['/agendamentos']">
+      <div class="text">
+        <h2 class="count">{{ scheduleReport.schedulesReserved }}</h2>
+        <h3 class="title" [ngPlural]="scheduleReport.schedulesReserved">
+          <ng-template ngPluralCase="=1">Novo Atendimento</ng-template>
+          <ng-template ngPluralCase="other">Novos Atendimentos</ng-template>
+        </h3>
+        <span>Aguardando Confirmação.</span>
+      </div>
+      <img src="assets/img/schedule.png">
+    </div>
+  </div>
+  <div id="attendance-chart" class="column">
+    <div class="white-card">
+      <div class="label">
+        <h4>{{ scheduleReport.schedulesAttendance }}%</h4>
+        <span>De Comparecimento</span>
+      </div>
+      <canvas baseChart [labels]="attendanceChartLabels" [datasets]="attendanceChartDatasets"
+        [options]="{cutout: '65%'}" [legend]="false" [type]="'doughnut'">
+      </canvas>
+    </div>
+  </div>
+  <div id="schedule-chart" class="column">
+    <div class="white-card">
+      <h3>Número de Atendimentos</h3>
+      <canvas baseChart [labels]="scheduleChartLabels" [datasets]="scheduleChartDatasets" [legend]="false" [options]="scheduleChartOptions" [type]="'bar'">
+      </canvas>
+    </div>
+  </div>
+</div>

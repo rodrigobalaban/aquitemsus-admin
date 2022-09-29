@@ -1,0 +1,77 @@
+.count,
+.title {
+  font-weight: bold;
+  margin: 0;
+}
+
+.count {
+  font-size: 3em;
+}
+
+.title {
+  margin-top: auto;
+}
+
+.text {
+  display: flex;
+  flex-direction: column;
+
+  span {
+    color: #9a9a9a;
+  }
+}
+
+.schedule {
+  display: flex;
+  justify-content: space-between;
+  padding: 2em;
+  margin-bottom: 1.5em;
+
+  img {
+    max-width: 100px;
+    height: auto;
+  }
+
+  &.reserved {
+    background: linear-gradient(45deg, #fff9ed, transparent);
+  }
+}
+
+#attendance-chart {
+  flex: 0.5;
+
+  .white-card {
+    position: relative;
+    background-color: #418de4;
+    padding: 50px;
+
+    .label {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      position: absolute;
+      height: calc(100% - 100px);
+      width: calc(100% - 100px);
+
+      h4 {
+        font-size: 4em;
+        line-height: 1em;
+        font-weight: bold;
+        margin: 0;
+      }
+    }
+  }
+}
+
+#schedule-chart {
+  .white-card {
+    flex-grow: 1;
+  }
+
+  h3 {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+}

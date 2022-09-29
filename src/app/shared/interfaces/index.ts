@@ -9,6 +9,8 @@ export * from './professional';
 export * from './rating';
 export * from './rating-avg';
 export * from './schedule';
+export * from './schedules-per-month';
+export * from './schedule-report';
 export * from './specialty';
 export * from './user';
 export * from './user-auth';
