@@ -91,9 +91,13 @@ export class PanelComponent implements OnInit {
       case 'Confirmed':
         return 'Confirmado';
       case 'Complete':
-        return 'Completo';
+        return 'Concluído';
+      case 'Absent':
+        return 'Ausente';
       case 'Canceled':
         return 'Cancelado';
+      case 'Rated':
+        return 'Concluído';
       default:
         return '';
     }
