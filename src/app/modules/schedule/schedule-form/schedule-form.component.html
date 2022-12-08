@@ -1,0 +1,61 @@
+<div class="page-header">
+    <h2 class="title">
+        <ng-container *ngIf="newRecord else editTitle">Novo</ng-container> Agendamento
+        <ng-template #editTitle>Editar</ng-template>
+    </h2>
+    <div class="line">
+        <mat-divider></mat-divider>
+    </div>
+</div>
+
+<main class="form-page">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="row">
+            <div class="column">
+                <div class="white-card column">                    
+                    <mat-form-field appearance="standard">
+                        <mat-label>Data</mat-label>
+                        <input type="datetime-local" matInput placeholder="Data" formControlName="date">
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>today</mat-icon>
+                        <mat-error>
+                            Informe uma data.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="standard">
+                        <mat-label>Status</mat-label>
+                        <mat-select placeholder="Perfil" formControlName="status" [disabled]="newRecord">
+                            <mat-option *ngIf="newRecord" [value]="'Available'">Disponível</mat-option>
+                            <mat-option [value]="'Reserved'">Reservado</mat-option>
+                            <mat-option [value]="'Confirmed'">Confirmado</mat-option>
+                            <mat-option [value]="'Complete'">Concluído</mat-option>
+                            <mat-option [value]="'Canceled'">Cancelado</mat-option>
+                        </mat-select>
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>pending_actions</mat-icon>
+                        <mat-error>
+                            Selecione uma opção.
+                        </mat-error>
+                    </mat-form-field>
+                    <mat-form-field *ngIf="establishment" appearance="standard">
+                        <mat-label>Profissional</mat-label>
+                        <mat-select [compareWith]="compareOptionsSelect" placeholder="Profissional" formControlName="professional">
+                            <mat-option *ngFor="let professional of establishment.professionals" [value]="professional">
+                                {{ professional.name }}
+                            </mat-option>
+                        </mat-select>
+                        <mat-icon fontSet="material-icons-outlined" matPrefix>medical_information</mat-icon>
+                        <mat-error>
+                            Selecione um profissional.
+                        </mat-error>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="form-buttons">
+            <button type="submit" mat-flat-button color="primary" class="button-primary">
+                <ng-container *ngIf="newRecord else editButton">Cadastrar</ng-container>
+                <ng-template #editButton>Atualizar</ng-template>
+            </button>
+            <button type="button" mat-button class="cancel-button" (click)="returnToList()">Cancelar</button>
+        </div>
+    </form>
+</main>

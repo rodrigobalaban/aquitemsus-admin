@@ -13,8 +13,17 @@
     }
 
     ::ng-deep {
-      .mat-list-base .mat-list-item {
-        border-radius: 10px 0 0 10px;
+      .mat-list-base,
+      .mat-nav-list {
+        .mat-list-item {
+          border-radius: 10px 0 0 10px;
+          color: #363b56;
+
+          &.active {
+            color: #418DE4;
+            background-color: rgba($color: #ebeff5, $alpha: 0.5);
+          }
+        }
 
         .mat-list-item-content {
           padding-right: 2em !important;
@@ -23,7 +32,7 @@
     }
   }
 
-  .mat-sidenav-content {
+  .mat-sidenav-content .content {
     padding: 2em;
   }
 }

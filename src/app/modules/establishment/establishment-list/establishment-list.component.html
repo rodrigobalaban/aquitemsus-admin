@@ -1,0 +1,66 @@
+<header class="page-header">
+    <h2 class="title">Estabelecimentos</h2>
+    <div class="line">
+        <mat-divider></mat-divider>
+    </div>
+    <button *ngIf="isAdmin" mat-flat-button color="primary" class="button-primary" [routerLink]="['novo']">Novo</button>
+</header>
+
+<main class="list-main">
+    <div class="line-search white-card">
+        <mat-form-field appearance="standard">
+            <mat-label>Buscar</mat-label>
+            <input matInput type="text" [formControl]="search">
+            <button *ngIf="search.value" matSuffix mat-icon-button aria-label="Limpar" (click)="clearSearch()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </mat-form-field>
+    </div>
+
+    <div class="grid white-card">
+        <table mat-table [dataSource]="items">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Nome</th>
+                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="category">
+                <th mat-header-cell *matHeaderCellDef>Categoria</th>
+                <td mat-cell *matCellDef="let element">{{element.category?.name}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="city">
+                <th mat-header-cell *matHeaderCellDef>Cidade</th>
+                <td mat-cell *matCellDef="let element">{{element.address.city.name}} - {{element.address.city.state}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="scheduling">
+                <th mat-header-cell *matHeaderCellDef>Agendamentos</th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button [ngClass]="{'scheduling-on': element.scheduling}">
+                        <mat-icon fontSet="material-icons-outlined">{{ element.scheduling ? 'toggle_on' : 'toggle_off'
+                            }}</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="delete">
+                <th mat-header-cell *matHeaderCellDef></th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="warn" aria-label="Excluir Usuário"
+                        (click)="delete($event, element.id)">
+                        <mat-icon fontSet="material-icons-outlined">delete</mat-icon>
+                    </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row [routerLink]="row.id" *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <mat-paginator [length]="totalItems" [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions"
+            [pageIndex]="page" (page)="paginate($event)" aria-label="Selecionar página">
+        </mat-paginator>
+    </div>
+</main>

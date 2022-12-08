@@ -1,0 +1,34 @@
+<main id="login">
+    <div class="container">
+        <img width="200" class="logo" src="assets/img/logo-white.svg">
+        <form *ngIf="!displayPasswordRecovery else recoverPassword" [formGroup]="form" class="login-box white-card" (ngSubmit)="login()">
+            <h1>Olá,</h1>
+            <p>para acessar o sistema,<br />faça o seu login.</p>
+            <mat-form-field appearance="standard">
+                <mat-label>E-mail</mat-label>
+                <input type="email" class="input" matInput placeholder="E-mail" formControlName="email">
+                <mat-icon fontSet="material-icons-outlined" matPrefix>email</mat-icon>
+                <mat-error *ngIf="form.get('email')?.invalid">
+                    Informe um e-mail válido.
+                </mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="standard">
+                <mat-label>Senha</mat-label>
+                <input type="password" class="input" matInput placeholder="Senha" formControlName="password">
+                <mat-icon fontSet="material-icons-outlined" matPrefix>lock</mat-icon>
+                <mat-error *ngIf="form.get('password')?.invalid">
+                    Informe uma senha.
+                </mat-error>
+            </mat-form-field>
+            <div class="button">
+                <button type="submit" mat-flat-button color="primary" class="button-primary">Login</button>
+            </div>
+            <div class="button">
+                <button type="button" mat-button (click)="toggleRecoverPassword()">Esqueci minha senha</button>
+            </div>            
+        </form>
+        <ng-template #recoverPassword>
+            <app-recover-password (showLogin)="toggleRecoverPassword()"></app-recover-password>
+        </ng-template>
+    </div>
+</main>

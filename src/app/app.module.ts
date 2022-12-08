@@ -1,27 +1,69 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {
+  DEFAULT_CURRENCY_CODE,
+  LOCALE_ID,
+  NgModule,
+  forwardRef,
+} from '@angular/core';
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
+import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatIconModule } from '@angular/material/icon';
-import { MatListModule } from '@angular/material/list';
-import { MatSidenavModule } from '@angular/material/sidenav';
-
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
 import { ScreenWithSidenavComponent, ToolbarComponent } from './layout';
 
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthTokenInterceptor } from './shared/http';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorIntl } from '@angular/material/paginator';
+import { MatPaginatorIntlBrazilian } from './shared/i18n';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+
+import { registerLocaleData } from '@angular/common';
+import pt from '@angular/common/locales/pt';
+import { BaseListComponent } from './shared/base/base-list/base-list.component';
+import { BaseFormComponent } from './shared/base/base-form/base-form.component';
+
+registerLocaleData(pt);
+
 @NgModule({
-  declarations: [AppComponent, ScreenWithSidenavComponent, ToolbarComponent],
+  declarations: [
+    AppComponent,
+    ScreenWithSidenavComponent,
+    ToolbarComponent,
+    BaseListComponent,
+    BaseFormComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    HttpClientModule,
+    MatButtonModule,
     MatIconModule,
     MatListModule,
+    MatMenuModule,
+    MatSnackBarModule,
     MatSidenavModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true,
+    },
+    { provide: LOCALE_ID, useValue: 'pt' },
+    { provide: DEFAULT_CURRENCY_CODE, useValue: 'BRL' },
+    {
+      provide: MatPaginatorIntl,
+      useClass: forwardRef(() => MatPaginatorIntlBrazilian),
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
