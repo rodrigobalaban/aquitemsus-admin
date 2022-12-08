@@ -15,4 +15,15 @@ export class UserListComponent extends BaseListComponent<User> {
   constructor(protected router: Router, protected userService: UserService) {
     super(router, userService);
   }
+
+  getUserRoleDescription(userRole: string): string {
+    switch (userRole) {
+      case 'Administrator':
+        return 'Administrador';
+      case 'Employee':
+        return 'Funcionário';
+      default:
+        return 'Usuário';
+    }
+  }
 }

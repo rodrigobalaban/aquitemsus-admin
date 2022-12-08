@@ -25,6 +25,10 @@
             <img width="60" src="assets/img/user.svg">
         </button>
         <mat-menu #userMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+                <mat-icon fontSet="material-icons-outlined">lock</mat-icon>
+                <span>Alterar Senha</span>
+            </button>
             <button mat-menu-item (click)="logout()">
                 <mat-icon fontSet="material-icons-outlined">logout</mat-icon>
                 <span>Logout</span>
